@@ -6,7 +6,7 @@ import { AppContext } from './context/NewContext';
 import Navbar from './components/Navbar'
 import { decrement, increment } from './redux/counter/counterSlice'
 import { useSelector, useDispatch } from 'react-redux'
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 
 
@@ -35,8 +35,13 @@ function App() {
       return response.json();
     },
   })
+  const newMutation = useMutation({
+    mutationFn:()=>(setTimeout(()=>console.log('hiii'),2000)) //trivial fnction here but ussually it returns a promise on hit mutations are used to change data on the server
+  })
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div>Error: {error.message}
+  <button onClick={()=>newMutation.mutate()}>Display Hiii</button>
+  </div>;
   return (
     <>
       <div>
